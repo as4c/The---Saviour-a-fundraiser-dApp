@@ -12,7 +12,7 @@ const networks = {
       symbol: "MATIC",
       decimals: 18,
     },
-    rpcUrls: ["https://rpc-mumbai.maticvigil.com/"],
+    rpcUrls: ["https://endpoints.omniatech.io/v1/matic/mumbai/public"],
     blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
   },
 };

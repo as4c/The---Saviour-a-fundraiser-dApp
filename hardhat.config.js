@@ -1,5 +1,5 @@
 require("@nomiclabs/hardhat-waffle");
-require('dotenv').config({ path: './.env.local' });
+require('dotenv').config({ path: './.env' });
 
 task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   const accounts = await hre.ethers.getSigners();
@@ -10,6 +10,9 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 })
 
 const privateKey = process.env.NEXT_PUBLIC_PRIVATE_KEY
+console.log(
+  "rpc...", process.env.NEXT_PUBLIC_RPC_URL
+)
 
 module.exports = {
   solidity: "0.8.10",
@@ -17,7 +20,7 @@ module.exports = {
   networks: {
     hardhat: {},
     polygon: {
-      url: process.env.NEXT_PUBLIC_RPC_URL,
+      url: "https://endpoints.omniatech.io/v1/matic/mumbai/public",
       accounts: [privateKey]
     }
   }

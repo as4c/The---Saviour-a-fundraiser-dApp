@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import FormLeftWrapper from './Components/FormLeftWrapper'
 import FormRightWrapper from './Components/FormRightWrapper'
 import { createContext, useState } from 'react';
-import {TailSpin} from 'react-loader-spinner';
-import {ethers} from 'ethers';
-import {toast} from 'react-toastify';
+import { TailSpin } from 'react-loader-spinner';
+import { ethers } from 'ethers';
+import { toast } from 'react-toastify';
 import CampaignFactory from '../../artifacts/contracts/Campaign.sol/CampaignFactory.json'
 
 const FormState = createContext();
@@ -41,67 +41,70 @@ const Form = () => {
         e.preventDefault();
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
-    
-        if(form.campaignTitle === "") {
-          toast.warn("Title Field Is Empty");
-        } else if(form.story === "" ) {
-          toast.warn("Story Field Is Empty");
-        } else if(form.requiredAmount === "") {
-          toast.warn("Required Amount Field Is Empty");
-        } else if(uploaded == false) {
+
+        if (form.campaignTitle === "") {
+            toast.warn("Title Field Is Empty");
+        } else if (form.story === "") {
+            toast.warn("Story Field Is Empty");
+        } else if (form.requiredAmount === "") {
+            toast.warn("Required Amount Field Is Empty");
+        } else if (uploaded == false) {
             toast.warn("Files Upload Required")
         }
-        else {        
-          setLoading(true);  
-    
-          const contract = new ethers.Contract(
-            process.env.NEXT_PUBLIC_ADDRESS,
-            CampaignFactory.abi,
-            signer
-          );
-            
-          const CampaignAmount = ethers.utils.parseEther(form.requiredAmount);
-    
-          const campaignData = await contract.createCampaign(
-            form.campaignTitle,
-            CampaignAmount,
-            imageUrl,
-            form.category,
-            storyUrl
-          );
-    
-          await campaignData.wait();   
-    
-          setAddress(campaignData.to);
+        else {
+            setLoading(true);
+
+            const contract = new ethers.Contract(
+                process.env.NEXT_PUBLIC_ADDRESS,
+                CampaignFactory.abi,
+                signer
+            );
+
+            const CampaignAmount = ethers.utils.parseEther(form.requiredAmount);
+
+            const campaignData = await contract.createCampaign(
+                form.campaignTitle,
+                CampaignAmount,
+                imageUrl,
+                form.category,
+                storyUrl
+            );
+
+            await campaignData.wait();
+
+            setAddress(campaignData.to);
         }
     }
 
-  return (
-      <FormState.Provider value={{form, setForm, image, setImage, ImageHandler, FormHandler, setImageUrl, setStoryUrl, startCampaign, setUploaded}} >
-    <FormWrapper>
-        <FormMain>
-            {loading == true ?
-                address == "" ?
-                    <Spinner>
-                        <TailSpin height={60} />
-                    </Spinner> :
-                <Address>
-                    <h1>Campagin Started Sucessfully!</h1>
-                    <h1>{address}</h1>
-                    <Button>
-                        Go To Campaign
-                    </Button>
-                </Address>
-                :
-                    <FormInputsWrapper>
-                        <FormLeftWrapper />
-                        <FormRightWrapper />
-                    </FormInputsWrapper>               
-            }
-        </FormMain>
-    </FormWrapper>
-    </FormState.Provider>
-  )
+    return (
+        <FormState.Provider value={{ form, setForm, image, setImage, ImageHandler, FormHandler, setImageUrl, setStoryUrl, startCampaign, setUploaded }} >
+            <FormWrapper>
+                <FormMain>
+                    {loading == true ?
+                        address == "" ?
+                            <Spinner>
+                                <TailSpin height={60} />
+                            </Spinner> :
+                            <Address>
+                                <h1>Campagin Started Sucessfully!</h1>
+                                <h1>{address}</h1>
+                                <Button>
+                                    Go To Campaign
+                                </Button>
+                                {/* <Link passHref href={'/' + address}><Button>
+                                    Go to Campaign
+                                </Button></Link> */}
+                            </Address>
+                        :
+                        <FormInputsWrapper>
+                            <FormLeftWrapper />
+                            <FormRightWrapper />
+                        </FormInputsWrapper>
+                    }
+                </FormMain>
+            </FormWrapper>
+        </FormState.Provider>
+    )
 }
 
 const FormWrapper = styled.div`
@@ -155,4 +158,4 @@ const Button = styled.button`
 `
 
 export default Form;
-export {FormState};
+export { FormState };

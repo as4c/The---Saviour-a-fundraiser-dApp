@@ -2,21 +2,10 @@ import styled from 'styled-components';
 import { FormState } from '../Form';
 import { useState, useContext } from 'react';
 import { toast } from 'react-toastify';
-import {TailSpin} from 'react-loader-spinner'
-import {create as IPFSHTTPClient} from 'ipfs-http-client';
+import { TailSpin } from 'react-loader-spinner'
+import { create as IPFSHTTPClient } from 'ipfs-http-client';
+import { handleFileSubmission, handleTextSubmission } from '../../../pages/api/upload';
 
-const projectId = process.env.NEXT_PUBLIC_IPFS_ID
-const projectSecret = process.env.NEXT_PUBLIC_IPFS_KEY
-const auth = 'Basic ' + Buffer.from(projectId + ":" + projectSecret).toString('base64')
-
-const client = IPFSHTTPClient({
-  host:'ipfs.infura.io',
-  port:5001,
-  protocol: 'https',
-  headers: {
-    authorization: auth
-  }
-})
 
 const FormRightWrapper = () => {
   const Handler = useContext(FormState);
@@ -28,30 +17,30 @@ const FormRightWrapper = () => {
     e.preventDefault();
     setUploadLoading(true);
 
-    if(Handler.form.story !== "") {
-      try {
-        const added = await client.add(Handler.form.story);
-        Handler.setStoryUrl(added.path)
-      } catch (error) {
-        toast.warn(`Error Uploading Story`);
-      }
-    }
-
-
-      if(Handler.image !== null) {
-          try {
-              const added = await client.add(Handler.image);
-              Handler.setImageUrl(added.path)
-          } catch (error) {
-            toast.warn(`Error Uploading Image`);
-          }
+    try {
+      if (Handler.form.story !== "") {
+        const storyUrl = await handleTextSubmission(Handler.form.story);
+        Handler.setStoryUrl(storyUrl);
       }
 
-      setUploadLoading(false);
+      if (Handler.image !== null) {
+        const imageUrl = await handleFileSubmission(Handler.image);
+        Handler.setImageUrl(imageUrl);
+      }
+
       setUploaded(true);
       Handler.setUploaded(true);
-      toast.success("Files Uploaded Sucessfully")
-}
+      toast.success("Files Uploaded Successfully");
+    } catch (error) {
+      console.log(
+        'error message', error.message
+      )
+      toast.warn(`Error uploading files: ${error.message}`);
+    } finally {
+      setUploadLoading(false);
+    }
+  };
+
 
   return (
     <FormRight>
@@ -78,11 +67,11 @@ const FormRightWrapper = () => {
         </Image>
       </FormInput>
       {uploadLoading == true ? <Button><TailSpin color='#fff' height={20} /></Button> :
-        uploaded == false ? 
-        <Button onClick={uploadFiles}>
-          Upload Files to IPFS
-        </Button>
-        : <Button style={{cursor: "no-drop"}}>Files uploaded Sucessfully</Button>
+        uploaded == false ?
+          <Button onClick={uploadFiles}>
+            Upload Files to IPFS
+          </Button>
+          : <Button style={{ cursor: "no-drop" }}>Files uploaded Sucessfully</Button>
       }
       <Button onClick={Handler.startCampaign}>
         Start Campaign
@@ -118,7 +107,7 @@ const Input = styled.input`
   outline:none;
   font-size:large;
   width:100% ;
-` 
+`
 
 const RowFirstInput = styled.div`
   display:flex ;
