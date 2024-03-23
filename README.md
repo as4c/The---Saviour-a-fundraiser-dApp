@@ -25,23 +25,14 @@ Welcome to the Web3 Fundraiser project! This project is built using Next.js, Inf
 - **Hardhat**: Hardhat is a development environment for Ethereum that provides built-in tasks for compiling, deploying, testing, and debugging smart contracts.
 - **ethers.js**: ethers.js is a JavaScript library for interacting with the Ethereum blockchain and smart contracts.
 ## Screenshots
-
-<div style="display: flex; justify-content: center; align-items: center;">
-    <div>
-        <img src="https://github.com/as4c/The---Saviour-a-fundraiser-dApp/assets/84590258/8c62aa8c-ff23-4066-8e59-77f65f4dc0d8" alt="Screenshot 1" width="400">
-    </div>
-    <div style="margin-left: 20px;">
-        <img src="https://github.com/as4c/The---Saviour-a-fundraiser-dApp/assets/84590258/992130a9-3d1d-4255-9c64-4bb7d86b41e6" alt="Screenshot 2" width="400">
-    </div>
+<div style="display: flex;">
+    <img src="https://github.com/as4c/The---Saviour-a-fundraiser-dApp/assets/84590258/8c62aa8c-ff23-4066-8e59-77f65f4dc0d8" alt="Screenshot 1" style="width: 45%; margin-right: 5px;">
+    <img src="https://github.com/as4c/The---Saviour-a-fundraiser-dApp/assets/84590258/992130a9-3d1d-4255-9c64-4bb7d86b41e6" alt="Screenshot 2" style="width: 45%;">
 </div>
 
-<div style="display: flex; justify-content: center; align-items: center;">
-    <div>
-        <img src="https://github.com/as4c/The---Saviour-a-fundraiser-dApp/assets/84590258/6a3544aa-a50c-46df-b751-10e2dec82ab0" alt="Screenshot 3" width="400">
-    </div>
-    <div style="margin-left: 20px;">
-        <img src="https://github.com/as4c/The---Saviour-a-fundraiser-dApp/assets/84590258/326a76ed-89f2-4986-a880-fbcb26394fba" alt="Screenshot 4" width="400">
-    </div>
+<div style="display: flex;">
+    <img src="https://github.com/as4c/The---Saviour-a-fundraiser-dApp/assets/84590258/6a3544aa-a50c-46df-b751-10e2dec82ab0" alt="Screenshot 3" style="width: 45%; margin-right: 5px;">
+    <img src="https://github.com/as4c/The---Saviour-a-fundraiser-dApp/assets/84590258/326a76ed-89f2-4986-a880-fbcb26394fba" alt="Screenshot 4" style="width: 45%;">
 </div>
 
 ## Getting Started
